@@ -1,4 +1,4 @@
-`Rpush` is a little tool I wrote to automatically copy files to a remote server
+`rpush` is a little tool I wrote to automatically copy files to a remote server
 folder that is accessible via web. The folder is configured to only allow access
 when the user knows the precise filename.
 
