@@ -75,7 +75,7 @@ from docopt import docopt
 
 def random_string(
         size=24,
-        chars = string.ascii_uppercase + string.ascii_lowercase + string.digits):
+        chars = string.ascii_uppercase+string.ascii_lowercase+string.digits):
     return "".join([random.choice(chars) for i in range(size)])
 
 
@@ -114,13 +114,15 @@ class RPushHandler(object):
             sys.exit(1)
 
     def cmd_push(self):
-        for f_in, f_out in itertools.chain(zip(self.args[ "<file>" ], self.args[ "<file>" ]),
-                                zip(self.args[ "<file_in>" ], self.args[ "<file_out>" ])):
+        for f_in, f_out in itertools.chain(zip(self.args["<file>"],
+                    self.args[ "<file>" ]),
+                zip(self.args["<file_in>"], self.args["<file_out>"])):
             rfolder = random_string()
-            self.run_ssh_command("mkdir "+ rfolder)
-            path = "{0}/{1}".format(rfolder, os.path.basename( f_out ))
+            self.run_ssh_command("mkdir " + rfolder)
+            path = "{0}/{1}".format(rfolder, os.path.basename(f_out))
             self.run_scp_command(f_in, path)
-            self.run_ssh_command("chown :{1} {0} && chmod g+r {0}".format( path, self.www_group ))
+            self.run_ssh_command("chown :{1} {0} && chmod g+r {0}".format(
+                path, self.www_group))
 
             print( "{0}/{1}".format(self.url, path))
 
@@ -135,7 +137,8 @@ class RPushHandler(object):
         complete_content = self.get_complete_remote_content()
 
         if not self.args[ "all" ]:
-            to_delete = [complete_content[int(i)] for i in set(self.args["<num>"])]
+            to_delete = [complete_content[int(i)]
+                    for i in set(self.args["<num>"])]
         else:
             to_delete = complete_content
 
@@ -152,7 +155,8 @@ class RPushHandler(object):
 
     def run_ssh_command(self, command):
         logging.debug(command)
-        proc = sp.Popen(self.ssh_args + ["cd {0} && ".format(self.basefolder) + command],
+        proc = sp.Popen(self.ssh_args +
+                    ["cd {0} && ".format(self.basefolder) + command],
                 stdout = sp.PIPE, stderr = sp.PIPE)
         rc = proc.wait()
         contents, warnings = proc.communicate()
@@ -164,7 +168,8 @@ class RPushHandler(object):
 
     def run_scp_command(self, path_from, path_to):
         logging.debug( "SCP: {0} -> {1}".format(path_from, path_to))
-        proc = sp.Popen(["scp", path_from, "{0}:{1}/{2}".format(self.host, self.basefolder, path_to)],
+        proc = sp.Popen(["scp", path_from,
+                    "{0}:{1}/{2}".format(self.host, self.basefolder, path_to)],
                 stdout = sp.PIPE, stderr = sp.PIPE)
         rc = proc.wait()
         contents, warnings = proc.communicate()
