@@ -85,7 +85,7 @@ class RPushHandler(object):
         self.extra_handling()
 
         cfg = configparser.ConfigParser()
-        cfg.read( os.path.expanduser( self.args[ "--config" ]))
+        cfg.read( os.path.expanduser(self.args[ "--config" ]))
 
         self.ssh_args = "ssh -x".split()
 
@@ -95,7 +95,7 @@ class RPushHandler(object):
         self.url        = cfg.get(section, "url")
         self.www_group  = cfg.get(section, "www-group")
 
-        self.ssh_args.append( self.host )
+        self.ssh_args.append(self.host)
 
         if self.args["list"]:
             self.cmd_list()
@@ -107,7 +107,7 @@ class RPushHandler(object):
             self.cmd_push()
 
 
-    def extra_handling( self ):
+    def extra_handling(self):
         if not self.args["--push"] and "clean" in self.args[ "<file>" ]:
             print("Please specify all or the filenumber you want to clean.")
             print("If you want to push file \"clean\" please specify push.")
@@ -125,13 +125,13 @@ class RPushHandler(object):
             print( "{0}/{1}".format(self.url, path))
 
 
-    def cmd_list( self ):
-        # for i,f in enumerate( self.list_complete_directory()):
+    def cmd_list(self):
+        # for i,f in enumerate(self.list_complete_directory()):
         for i,f in enumerate(self.get_complete_remote_content()):
             print("[{0}]\t{1}\t{2}/{1}".format(i, f, self.url))
 
 
-    def cmd_clean( self ):
+    def cmd_clean(self):
         complete_content = self.get_complete_remote_content()
 
         if not self.args[ "all" ]:
@@ -152,7 +152,7 @@ class RPushHandler(object):
 
     def run_ssh_command(self, command):
         logging.debug(command)
-        proc = sp.Popen(self.ssh_args + ["cd {0} && ".format( self.basefolder ) + command],
+        proc = sp.Popen(self.ssh_args + ["cd {0} && ".format(self.basefolder) + command],
                 stdout = sp.PIPE, stderr = sp.PIPE)
         rc = proc.wait()
         contents, warnings = proc.communicate()
