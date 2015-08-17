@@ -21,9 +21,9 @@
 # THE SOFTWARE.
 """
 Usage:
-    rpush [--config <cfg> ] list
-    rpush [--config <cfg> ] clean (all|<num> ...)
-    rpush [--config <cfg> ] [--push] (<file> | --alias <file_in> <file_out>) ...
+    rpush [--config <cfg>] list
+    rpush [--config <cfg>] clean (all|<num> ...)
+    rpush [--config <cfg>] [--push] (<file> | --alias <file_in> <file_out>) ...
     rpush -h | --help
 
 Options:
@@ -40,13 +40,13 @@ Options:
     list            List all remote files.
     clean           Clean all remote files
 
-    --config <cfg>  Specify config file to read. [default: ~/.rpushrc]
+    --config <cfg>  Specify config file to read. [default: ~/.config/rpushrc]
 
 """
 
 from __future__ import print_function
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 import os
 import sys
@@ -59,8 +59,7 @@ import itertools
 
 import logging
 logging.basicConfig(
-        format='%(asctime)s | %(funcName)s: %(message)s',
-        datefmt='%m/%d/%Y %H:%M:%S',
+        format='%(asctime)s | %(funcName)s: %(message)s', datefmt='%m/%d/%Y %H:%M:%S',
         level = logging.INFO)
 
 if sys.version_info < (3, 0):
@@ -75,7 +74,7 @@ from docopt import docopt
 
 def random_string(
         size=24,
-        chars = string.ascii_uppercase+string.ascii_lowercase+string.digits):
+        chars=string.ascii_uppercase+string.ascii_lowercase+string.digits):
     return "".join([random.choice(chars) for i in range(size)])
 
 
