@@ -123,7 +123,7 @@ class RPushHandler(object):
             sys.exit(1)
 
     def cmd_push(self):
-        for f_in, f_out in itertools.chain(
+        for f_in, f_out in it.chain(
                 zip(self.args["<file>"], self.args["<file>"]),
                 zip(self.args["<file_in>"], self.args["<file_out>"])):
             rfolder = random_string()
