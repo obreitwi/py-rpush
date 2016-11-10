@@ -21,7 +21,7 @@
 # THE SOFTWARE.
 """
 Usage:
-    rpush [-v] [--config <cfg>] list
+    rpush [-v] [--config <cfg>] [-u] list [<num> ...]
     rpush [-v] [--config <cfg>] clean (all|<num> ...)
     rpush [-v] [--config <cfg>] [--push] (<file> | --alias <file_in> <file_out>) ...
     rpush [-v] --help
@@ -34,6 +34,8 @@ Options:
     --push          Force pushing of whatever follows
 
     <file>          File to push to remote
+
+    -u --url-only   Only list the remote URLs (useful for copying).
 
     -a --alias      Indicate that the file should be renamed at remote site
     <file_in>       Input file (local)
@@ -48,7 +50,7 @@ Options:
 
 from __future__ import print_function
 
-__version__ = "0.1.4"
+__version__ = "0.2.0"
 
 import os
 import os.path as osp
@@ -58,7 +60,7 @@ import subprocess as sp
 import random
 import string
 
-import itertools
+import itertools as it
 
 import logging
 logging.basicConfig(
@@ -93,7 +95,7 @@ class RPushHandler(object):
         self.extra_handling()
 
         cfg = configparser.ConfigParser()
-        cfg.read( os.path.expanduser(self.args[ "--config" ]))
+        cfg.read( os.path.expanduser(self.args["--config"]))
 
         self.ssh_args = "ssh -x".split()
 
@@ -134,10 +136,20 @@ class RPushHandler(object):
             print(self.encode_url(path))
 
     def cmd_list(self):
-        # for i,f in enumerate(self.list_complete_directory()):
-        for i,f in enumerate(self.get_complete_remote_content()):
-            print("[{0}]\t'{1}'\t{2}/{3}".format(
-                i, f, self.url, urllib.quote(f)))
+        complete_content = self.get_complete_remote_content()
+
+        if len(self.args["<num>"]) > 0:
+            idx = map(int, self.args["<num>"])
+        else:
+            idx = range(len(complete_content))
+
+        for i in idx:
+            f = complete_content[i]
+            if self.args["--url-only"]:
+                print("{0}/{1}".format(self.url, urllib.quote(f)))
+            else:
+                print("[{0}]\t'{1}'\t{2}/{3}".format(
+                    i, f, self.url, urllib.quote(f)))
 
     def cmd_clean(self):
         complete_content = self.get_complete_remote_content()
