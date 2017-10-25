@@ -52,7 +52,7 @@ Options:
 
 from __future__ import print_function
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 import os
 import os.path as osp
@@ -102,7 +102,10 @@ class RPushHandler(object):
         self.ssh_args = "ssh -x".split()
 
         section = "RPush"
-        self.host       = args.get("-H", cfg.get(section, "host"))
+        if args["-H"] is None:
+            self.host   = cfg.get(section, "host")
+        else:
+            self.host   = args["-H"]
         self.basefolder = cfg.get(section, "folder")
         self.url        = cfg.get(section, "url")
         self.www_group  = cfg.get(section, "www-group")
