@@ -2,6 +2,6 @@
 
 DIR=$(dirname $(readlink -f $0))
 
-ln -sv $DIR/rpush.py ~/.local/bin/rpush
-ln -sv $DIR/rpushrc  ~/.config/rpushrc
+ln -sfv $DIR/rpush.py ~/.local/bin/rpush
+ln -sfv $DIR/rpushrc  ~/.config/rpushrc
 

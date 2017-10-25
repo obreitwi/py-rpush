@@ -21,9 +21,9 @@
 # THE SOFTWARE.
 """
 Usage:
-    rpush [-v] [--config <cfg>] [-u] list [<num> ...]
-    rpush [-v] [--config <cfg>] clean (all|<num> ...)
-    rpush [-v] [--config <cfg>] [--push] (<file> | --alias <file_in> <file_out>) ...
+    rpush [-v] [--config <cfg>] [-H <host>] [-u] list [<num> ...]
+    rpush [-v] [--config <cfg>] [-H <host>] clean (all|<num> ...)
+    rpush [-v] [--config <cfg>] [-H <host>] [--push] (<file> | --alias <file_in> <file_out>) ...
     rpush [-v] --help
 
 Options:
@@ -34,6 +34,8 @@ Options:
     --push          Force pushing of whatever follows
 
     <file>          File to push to remote
+
+    -H <host>       Host to use.
 
     -u --url-only   Only list the remote URLs (useful for copying).
 
@@ -50,7 +52,7 @@ Options:
 
 from __future__ import print_function
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 import os
 import os.path as osp
@@ -100,7 +102,7 @@ class RPushHandler(object):
         self.ssh_args = "ssh -x".split()
 
         section = "RPush"
-        self.host       = cfg.get(section, "host")
+        self.host       = args.get("-H", cfg.get(section, "host"))
         self.basefolder = cfg.get(section, "folder")
         self.url        = cfg.get(section, "url")
         self.www_group  = cfg.get(section, "www-group")
