@@ -27,32 +27,35 @@ Usage:
     rpush [-v] --help
 
 Options:
-    -h --help       Show this screen.
-    --version       Show version.
-    -v --verbose    Enable verbose output
+    --config <cfg>  Specify config file to read. [default: ~/.config/rpushrc]
 
     --push          Force pushing of whatever follows
 
-    <file>          File to push to remote
+    --version       Show version.
 
     -H <host>       Host to use.
-
-    -u --url-only   Only list the remote URLs (useful for copying).
 
     -a --alias      Indicate that the file should be renamed at remote site
     <file_in>       Input file (local)
     <file_out>      Filename of the pushed file on the server
-    list            List all remote files.
+
+    -h --help       Show this screen.
+
+    -u --url-only   Only list the remote URLs (useful for copying).
+
+    -v --verbose    Enable verbose output
+
+    <file>          File to push to remote
+
     clean           Clean specfic (i.e., indices returned by list) / all remote
                     files
 
-    --config <cfg>  Specify config file to read. [default: ~/.config/rpushrc]
-
+    list            List all remote files.
 """
 
 from __future__ import print_function
 
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 import os
 import os.path as osp
