@@ -1,8 +1,8 @@
 
 [RPush]
 host      = root
-folder    = /var/www/default/tmpodrom
-url       = http://zqnr.de/tmpodrom
+folder    = /var/www/default-ssl/tmpodrom
+url       = https://breitwieser.eu/tmpodrom
 # group needed to publish web documents
 www-group = www-data
 
