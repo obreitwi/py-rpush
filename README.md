@@ -9,6 +9,9 @@ URL under which the file is accessible.
 
 The URL can then be send to others and only those can access the file.
 
+The successor to `rpush` is [`asfa`](https://github.com/obreitwi/asfa), extending
+its functionality and only using a single ssh connection per call.
+
     Usage:
         rpush [-v] [--config <cfg>] [-H <host>] [-u] list [<num> ...]
         rpush [-v] [--config <cfg>] [-H <host>] clean (all|<num> ...)
